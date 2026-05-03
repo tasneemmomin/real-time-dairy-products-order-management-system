@@ -4,12 +4,16 @@ from pydantic import BaseModel
 import numpy as np
 from typing import Optional
 import random
+import os
 
 app = FastAPI(title="DairyOS Pro ML API", version="1.0.0")
 
+# Dynamic CORS based on environment
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -209,7 +213,7 @@ def predict_spoilage_model(data: SpoilageInput) -> dict:
         "spoilage_risk": round(risk_score, 2),
         "quality": quality,
         "suggestion": f"Milk quality is {quality.lower()}. "
-                      f"{'Safe for consumption and sale.' if risk_score < 0.3 else 'Monitor closely and consider testing before distribution.' if risk_score < 0.6 else 'High risk of spoilage. Do not distribute. Check storage conditions.'}"
+                      f"{'Safe for consumption and sale.' if risk_score < 0.3 else 'Monitor closely and consider testing before distribution.' if risk_score < 0.6 else 'High risk of spoilage. Do not distribute.'}"
     }
 
 
