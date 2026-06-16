@@ -9,7 +9,7 @@
 ### 2. White Screen of Death on Frontend
 **Symptom:** App loads as a blank page but no API errors.
 **Fix:**
-Your `localStorage` data (especially Cart state) might be corrupted. Clear your browser site data or run `localStorage.clear()` in the DevTools console and reload. (Note: Recent fixes make the app[...]
+Your `localStorage` data (especially Cart state) might be corrupted. Clear your browser site data or run `localStorage.clear()` in the DevTools console and reload. (Note: Recent fixes make the app
 
 ### 3. Missing Default QR Images during Payments
 **Symptom:** During checkout, the static QR code images are broken.
